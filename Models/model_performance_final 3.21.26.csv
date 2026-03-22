@@ -1,0 +1,5 @@
+Model,AUC_ROC,F1_Score,Precision,Recall,Test_Year,Note
+Logistic Regression (Cleaned),0.7869,0.1216,0.0662,0.7459,2021,Removed total_individuals_affected to eliminate leakage
+Random Forest,0.9463,0.4183,0.297,0.7072,2021,Tree-based ensemble
+XGBoost,0.9742,0.5442,0.3931,0.884,2021,Gradient Boosted Trees (Highest AUC)
+SVM,0.928,0.2565,0.1501,0.8785,2021,"High sensitivity, but 900 false alarms."
