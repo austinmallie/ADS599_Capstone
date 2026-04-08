@@ -1,44 +1,196 @@
 # Hospital Ransomware Analysis: A Predictive Framework for Cybersecurity Risk
 
-This project is part of the ADS-599 capstone in the Applied Data Science Program at the University of San Diego
+> A capstone project for the ADS-599 Applied Data Science Program at the University of San Diego
 
-## Project Status: Completed
+![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
+![Python](https://img.shields.io/badge/Python-3.10-blue)
+![License](https://img.shields.io/badge/License-MIT-lightgrey)
+
+---
+
+## Table of Contents
+- [Project Overview](#project-overview)
+- [Key Results](#key-results)
+- [Repository Structure](#repository-structure)
+- [Data Sources](#data-sources)
+- [Installation](#installation)
+- [How to Run](#how-to-run)
+- [Methods](#methods)
+- [Technologies](#technologies)
+- [Contributors](#contributors)
+- [License](#license)
+
+---
+
+## Project Overview
+
+Hospital cybersecurity is fundamentally reactive. Defenses exist — but they activate after an attack has already occurred. After patients are harmed. After systems go offline. After the damage is done.
+
+This project asks a different question: **what if we could identify which hospitals are most vulnerable before an attack happens?** Could the financial and operational data hospitals already report to the federal government serve as an early warning system?
+
+The research literature paints a consistent picture. Larger hospitals face elevated breach risk due to more complex IT environments. Urban location, non-profit status, high inpatient workloads, and specialized care all correlate with higher breach probability. Financial profile matters too — profitable hospitals are attractive ransom targets, while under-resourced ones cannot afford adequate protections. The most rigorous prior work (Dolezel et al., 2023) achieved 78–83% accuracy, but was far better at identifying hospitals that were not breached than catching the ones that were. High specificity, weak recall — the wrong trade-off when missing a vulnerable hospital has real patient safety consequences. No prior study produced a reproducible, longitudinal predictive framework. That gap is exactly where this project lives.
+
+---
+
+## Key Results
+
+| Model | AUC | Recall | Precision | F1 |
+|---|---|---|---|---|
+| Logistic Regression | **0.787** | **0.746** | **0.066** | **0.122** |
+| XGBoost | **0.974** | **0.884** | **0.393** | **0.544** |
+| Random Forest | **0.946** | **0.707** | **0.297** | **0.418** |
+| SVM | **0.928** | **0.879** | **0.150** | **0.257** |
+
+XGBoost achieved the highest performance, successfully identifying **88% of breached hospitals** in the 2021 temporal holdout year. Results support the hypothesis that financial health ratios, hospital size indicators, and year-over-year trajectory variables are statistically significant predictors of cybersecurity vulnerability.
+
+---
+
+## Repository Structure
+
+```
+ADS599_Capstone/
+│
+├── Data-Folder/
+│   ├── Cost-Report-Data/          # Annual CMS cost report CSV files (2014–2023)
+│   ├── Hospital_General_Clean_Final.csv
+│   └── breach_provider_CCN.csv
+│
+├── EDA/
+|   ├── Breach_EDA.ipynb
+|   ├── Cost_Report_EDA.ipynb
+|   ├── HospitalGeneral_EDA.ipynb
+|   ├── hospital_ransomware_eda.ipynb # Final EDA of the combined data sets
+|
+|
+├── Feature_Engineering/
+|   ├── HospitalGeneral_FE.ipynb
+|   ├── Hospital_Cost_Report_Feature_Engineered.ipynb
+|
+|
+├── Models/
+|   ├── Confusion Matrix/
+|      ├── confusion_matrix_baseline.png
+|      ├── confusion_matrix_rf.png
+|      ├── confusion_matrix_svm.png
+|      ├── confusion_matrix_xgb.png
+|   ├── Feature Importance/
+|      ├── feature_importance_final.csv
+|      ├── feature_importance_rf.csv
+|      ├── feature_importance_xgb.csv
+|   ├── claude_ransomware_model_analysis.ipynb
+|   ├── hospital_breaches_predictive_modeling.ipynb
+|   ├── hospital_breaches_predictive_modeling_app_data.ipynb # Final model notebook
+|   ├── hospital_ransomware.parquet # The data file is too large for github to handle so it was compressed using as a parquet file
+|   ├── model_performance_final 3.21.26.csv
+|
+|
+├── Capstone_Streamlit.ipynb
+├── README.md
+└── .gitignore
+```
+
+---
+
+## Data Sources
+
+All three datasets are publicly available at no cost.
+
+| Dataset | Source | Access |
+|---|---|---|
+| CMS Hospital Provider Cost Reports (2014–2023) | [CMS HCRIS](https://www.cms.gov/data-research/statistics-trends-and-reports/cost-reports) | Bulk CSV download |
+| CMS Hospital General Information | [CMS Care Compare](https://data.cms.gov/provider-data/dataset/xubh-q36u) | Single CSV download |
+| HHS OCR Breach Portal | [HHS OCR](https://ocrportal.hhs.gov/ocr/breach/breach_report.jsf) | CSV download |
+
+The three sources are joined on the **CMS Provider Certification Number (CCN)**, producing a longitudinal panel of **61,444 hospital-year observations** covering **6,696 unique hospitals**.
+
+---
 
 ## Installation
 
-to use this project, please first clone the repo on your device using the command below:
+### Prerequisites
+- Python 3.10 or higher
+- Google Colab (recommended) or a local Jupyter environment
 
-git init
+### Clone the repository
 
+```bash
 git clone https://github.com/austinmallie/ADS599_Capstone
+cd ADS599_Capstone
+```
 
-## Project Introdution/Objective
+### Install dependencies
 
-The main purpose of this project is to provide hospitals around the US a proactive defense against cybersecurity attacks rather than reactively defend against them. The core problem is that hospital cybersecurity is fundamentally reactive. Defenses exist — but they activate after an attack has already occurred. After patients are harmed. After systems go offline. After the damage is done. Our project asks a different question: what if we could identify which hospitals are most vulnerable before an attack happens? Could the financial and operational data hospitals already report to the federal government serve as an early warning system?
+```bash
+pip install -r requirements.txt
+```
 
-The research literature paints a consistent picture. Larger hospitals face elevated breach risk due to more complex IT environments. Urban location, non-profit status, high inpatient workloads, and specialized care all correlate with higher breach probability. Financial profile matters too — profitable hospitals are attractive ransom targets, while under-resourced ones can't afford adequate protections. The most rigorous prior work, Dolezel et al. in 2023, achieved 78 to 83 percent accuracy — but was far better at identifying hospitals that weren't breached than catching the ones that were. High specificity, weak recall. That's the wrong trade-off when missing a vulnerable hospital has real patient safety consequences. No prior study produced a reproducible, longitudinal predictive framework. That gap is exactly where our project lives.
+---
+
+## How to Run
+
+The entire pipeline runs in a single notebook: `hospital_ransomware_pipeline.ipynb`
+
+**If using Google Colab:**
+1. Open the notebook in Colab
+2. Mount your Google Drive when prompted
+3. Place the data files in your Drive under `My Drive/Data-Folder/`
+4. Run all cells top to bottom (`Runtime → Run all`)
+
+The notebook will produce two output files saved to your Google Drive:
+- `cost_report_final.parquet` — cleaned and feature-engineered cost report data
+- `hospital_ransomware_master.parquet` — final merged model-ready dataset
+
+**If running locally:**
+1. Update `DATA_DIR` at the top of the notebook to point to your local data folder
+2. Update `DRIVE_DIR` to your preferred local output directory
+3. Run all cells top to bottom
+
+---
+
+## Methods
+
+- Longitudinal panel construction and multi-source data integration
+- Missing value profiling and threshold-based column removal
+- Outlier detection and domain-validated row removal
+- Feature engineering: financial ratios, per-unit efficiency metrics, solvency indicators, year-over-year temporal delta features
+- StandardScaler normalization for distance-based models
+- Median imputation for remaining intermittent missingness
+- Temporal holdout validation strategy (train on 2014–2020, test on 2021)
+- Cost-sensitive learning to address 32:1 class imbalance
+- Binary classification: Logistic Regression, Random Forest, SVM, XGBoost
+- Distributional analysis, correlation analysis, multicollinearity assessment
+- Data visualization
+
+---
+
+## Technologies
+
+| Category | Tools |
+|---|---|
+| Language | Python 3.10 |
+| Data manipulation | pandas, numpy |
+| Machine learning | scikit-learn, xgboost |
+| Visualization | matplotlib, seaborn |
+| Environment | Google Colab, Jupyter |
+| Version control | Git, GitHub |
+
+---
 
 ## Contributors
 
-Austin Mallie
-Cynthia Portales-Loebell
-Sasha Libolt
+| Name | GitHub |
+|---|---|
+| Austin Mallie | [@austinmallie](https://github.com/austinmallie) |
+| Cynthia Portales-Loebell | [@cploebell](https://github.com/cploebell) |
+| Sasha Libolt | [slibolt](https://github.com/slibolt) |
+---
 
-## Methods Used
-Predictive Modeling
-Data Visualitization
-Data Cleaning
-Data Integration
-Distributional analysis
-Feature Engineering
-
-## Technologies
-Python 
+## License
 
 
 
+---
 
-## Project Description
+*University of San Diego — Applied Data Science Program — ADS-599 Capstone*
 
-Ransomware attacks on U.S. hospitals are accelerating, yet most risk frameworks remain reactive. This study develops a predictive framework using ten years of publicly available CMS cost report data, CMS Hospital General Information files, and HHS Office for Civil Rights breach records to identify hospitals at elevated cybersecurity risk. A longitudinal panel of 61,444 hospital-year observations was used to train and evaluate four binary classification models — Logistic Regression, Random Forest, Support Vector Machine, and XGBoost — using a temporal holdout strategy and cost-sensitive learning to address a severe 32:1 class imbalance. XGBoost achieved the highest performance with an AUC of 0.974 and recall of 0.884, successfully identifying 88% of breached hospitals in the 2021 holdout year. Results support the hypothesis that financial health ratios, hospital size indicators, and year-over-year trajectory variables are statistically significant predictors of cybersecurity vulnerability, enabling a reproducible, publicly available framework for proactive hospital risk assessment.
 
