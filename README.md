@@ -127,23 +127,6 @@ pip install -r requirements.txt
 
 ## How to Run
 
-The entire pipeline runs in a single notebook: `hospital_ransomware_pipeline.ipynb`
-
-**If using Google Colab:**
-1. Open the notebook in Colab
-2. Mount your Google Drive when prompted
-3. Place the data files in your Drive under `My Drive/Data-Folder/`
-4. Run all cells top to bottom (`Runtime → Run all`)
-
-The notebook will produce two output files saved to your Google Drive:
-- `cost_report_final.parquet` — cleaned and feature-engineered cost report data
-- `hospital_ransomware_master.parquet` — final merged model-ready dataset
-
-**If running locally:**
-1. Update `DATA_DIR` at the top of the notebook to point to your local data folder
-2. Update `DRIVE_DIR` to your preferred local output directory
-3. Run all cells top to bottom
-
 ---
 
 ## Methods
