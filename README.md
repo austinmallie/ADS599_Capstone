@@ -126,6 +126,81 @@ pip install -r requirements.txt
 ---
 
 ## How to Run
+### Option 1: Google Colab (Recommended)
+
+This project is designed to run seamlessly in Google Colab, which avoids local environment setup and handles the larger datasets more efficiently.
+
+**Setup**
+
+Clone the repository:
+
+```bash
+git clone https://github.com/austinmallie/ADS599_Capstone
+```
+
+Upload the repository to Google Colab or mount your Google Drive:
+
+```python
+from google.colab import drive
+drive.mount('/content/drive')
+```
+
+Navigate to the project directory:
+
+```python
+import os
+os.chdir('/content/ADS599_Capstone')
+```
+
+Install required dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+**Execution Order**
+
+Run the notebooks in the following sequence to reproduce the full pipeline:
+
+1. Exploratory Data Analysis
+   - `EDA/hospital_ransomware_eda.ipynb`
+
+2. Feature Engineering
+   - `Feature_Engineering/Hospital_Cost_Report_Feature_Engineered.ipynb`
+   - `Feature_Engineering/HospitalGeneral_FE.ipynb`
+
+3. Modeling and Evaluation
+   - `Models/hospital_breaches_predictive_modeling_app_data.ipynb`
+
+**Data Requirements**
+
+The final modeling dataset is included as a compressed parquet file:
+
+```
+Models/hospital_ransomware.parquet
+```
+
+To rebuild the dataset from raw sources:
+- Download the datasets listed in the [Data Sources](#data-sources) section
+- Place them in the `Data-Folder/` directory
+- Execute the notebooks in the order listed above
+
+**Outputs**
+
+Running the full pipeline will generate:
+- Model performance metrics (AUC, Recall, Precision, F1)
+- Confusion matrices (stored in `Models/Confusion Matrix/`)
+- Feature importance outputs (stored in `Models/Feature Importance/`)
+
+---
+
+### Option 2: Local Environment
+
+1. Clone the repository and install dependencies as above
+2. Update `DATA_DIR` at the top of each notebook to point to your local data folder
+3. Update `DRIVE_DIR` to your preferred local output directory
+4. Run notebooks in the execution order listed above
+
 
 --- 
 
