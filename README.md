@@ -52,7 +52,8 @@ ADS599_Capstone/
 ├── Data-Folder/
 │   ├── Cost-Report-Data/          # Annual CMS cost report CSV files (2014–2023)
 │   ├── Hospital_General_Clean_Final.csv
-│   └── breach_provider_CCN.csv
+│   ├── breach_provider_CCN.csv
+|   ├── predictions.csv # For model visualizations
 │
 ├── EDA/
 |   ├── Breach_EDA.ipynb
@@ -76,11 +77,11 @@ ADS599_Capstone/
 |      ├── feature_importance_final.csv
 |      ├── feature_importance_rf.csv
 |      ├── feature_importance_xgb.csv
-|   ├── claude_ransomware_model_analysis.ipynb
-|   ├── hospital_breaches_predictive_modeling.ipynb
-|   ├── hospital_breaches_predictive_modeling_app_data.ipynb # Final model notebook
+|   ├── claude_ransomware_model_analysis.ipynb # Model visuzalizations and analysis
+|   ├── hospital_breaches_predictive_modeling.ipynb # Final model notebook
+|   ├── hospital_breaches_predictive_modeling_app_data.ipynb # Prepares prediction outputs for Streamlit App
 |   ├── hospital_ransomware.parquet # The data file is too large for github to handle so it was compressed using as a parquet file
-|   ├── model_performance_final 3.21.26.csv
+|   ├── train_test_metrics_with_ci.csv # Model performance metrics 
 |
 |
 ├── Capstone_Streamlit.ipynb
@@ -170,7 +171,7 @@ Run the notebooks in the following sequence to reproduce the full pipeline:
    - `Feature_Engineering/HospitalGeneral_FE.ipynb`
 
 3. Modeling and Evaluation
-   - `Models/hospital_breaches_predictive_modeling_app_data.ipynb`
+   - `Models/hospital_breaches_predictive_modeling.ipynb`
 
 **Data Requirements**
 
@@ -188,7 +189,7 @@ To rebuild the dataset from raw sources:
 **Outputs**
 
 Running the full pipeline will generate:
-- Model performance metrics (AUC, Recall, Precision, F1)
+- Model performance metrics (ROC-AUC, PR-AUC Recall, Precision, F1)
 - Confusion matrices (stored in `Models/Confusion Matrix/`)
 - Feature importance outputs (stored in `Models/Feature Importance/`)
 
@@ -239,11 +240,14 @@ Running the full pipeline will generate:
 |---|---|
 | Austin Mallie | [@austinmallie](https://github.com/austinmallie) |
 | Cynthia Portales-Loebell | [@cploebell](https://github.com/cploebell) |
-| Sasha Libolt | [slibolt](https://github.com/slibolt) |
+| Sasha Libolt | [@slibolt](https://github.com/slibolt) |
 ---
 
 ## License
 
+This project was completed as part of the ADS-599 Capstone at the University of San Diego. 
+All rights reserved by the authors. Data sources are publicly available through CMS and HHS 
+as noted in the Data Sources section.
 
 
 ---
