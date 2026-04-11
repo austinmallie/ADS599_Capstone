@@ -33,12 +33,12 @@ The research literature paints a consistent picture. Larger hospitals face eleva
 
 ## Key Results
 
-| Model | AUC | Recall | Precision | F1 |
+| Model | ROC-AUC | PR-AUC | Recall | Precision | F1 |
 |---|---|---|---|---|
-| Logistic Regression | **0.787** | **0.746** | **0.066** | **0.122** |
-| XGBoost | **0.974** | **0.884** | **0.393** | **0.544** |
-| Random Forest | **0.946** | **0.707** | **0.297** | **0.418** |
-| SVM | **0.928** | **0.879** | **0.150** | **0.257** |
+| Logistic Regression | **0.787** | **0.104** | **0.751** | **0.067** | **0.122** |
+| XGBoost | **0.975** | **0.722** | **0.884** | **0.391** | **0.542** |
+| Random Forest | **0.945** | **0.457** | **0.691** | **0.322** | **0.439** |
+| SVM | **0.929** | **0.283** | **0.867** | **0.149** | **0.254** |
 
 XGBoost achieved the highest performance, successfully identifying **88% of breached hospitals** in the 2021 temporal holdout year. Results support the hypothesis that financial health ratios, hospital size indicators, and year-over-year trajectory variables are statistically significant predictors of cybersecurity vulnerability.
 
