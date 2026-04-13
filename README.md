@@ -1,4 +1,5 @@
-# Hospital Ransomware Analysis: A Predictive Framework for Cybersecurity Risk
+# Predicting Hospital Ransomware Vulnerability: A Machine Learning Framework Using Public Financial and Operational Data
+
 
 > A capstone project for the ADS-599 Applied Data Science Program at the University of San Diego
 
